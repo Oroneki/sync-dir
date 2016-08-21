@@ -42,10 +42,10 @@ let cli = meow(`
 });
 
 if (cli.flags.watch) {
-    let files = syncDir.getFiles(pkg.sync);
+    let files = syncDir.getFiles(pkg);
     syncDir.watch(files,() => {
-        syncDir.copy(pkg.sync);
+        syncDir.copy(pkg);
     });
 } else {
-    syncDir.copy(pkg.sync);
+    syncDir.copy(pkg);
 }
