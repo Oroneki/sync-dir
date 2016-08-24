@@ -2,6 +2,10 @@
 
 sync directory in package.json
 
+## Require
+
+Node.js =< 5.0
+
 ## Install
 
 ```
