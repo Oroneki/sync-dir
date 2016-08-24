@@ -6,7 +6,9 @@ const rimraf = require('rimraf');
 
 describe('sync-dir', function() {
     const SYNC_DATA = {
-        "./test/files/*": "./test/files/dest"
+        sync: {
+            "./test/files/*": "./test/files/dest"
+        }
     };
     beforeEach(() => {
         rimraf.sync('./test/files/dest');
