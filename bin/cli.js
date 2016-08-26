@@ -7,11 +7,11 @@ const syncDir = require('../index');
 
 const pkgPath = path.join(process.cwd(), 'package.json');
 const pkg = require(pkgPath);
-if (!pkg.sync) return;
+pkg.sync = pkg.sync || {};
 
 let cli = meow(`
     Usage
-      $ sync-dir [--watch]
+      $ sync-dir [--watch --config <confpath>]
       
       package.json
       {
@@ -19,17 +19,29 @@ let cli = meow(`
           "/path/to/source/**/*": "/path/to/dest"
         }
       }
+      
+      or
+      
+      sync.conf.js
+      module.exports = {
+        "sync": {
+          "/path/to/source/**/*": "/path/to/dest"
+        }
+      }
     Options
       -w, --watch
+      -c, --config
       -v, --version version
       -h, --help help
     Examples
       $ sync-dir
       $ sync-dir --watch
       $ sync-dir -w
+      $ sync-dir --config ./sync.conf.js
 `, {
     alias: {
         w: 'watch',
+        c: 'config',
         v: 'version',
         h: 'help'
     },
@@ -40,6 +52,11 @@ let cli = meow(`
         'watch'
     ]
 });
+
+if (cli.flags.config) {
+    let conf = require(path.join(process.cwd(), cli.flags.config));
+    Object.assign(pkg.sync,conf);
+}
 
 if (cli.flags.watch) {
     let files = syncDir.getFiles(pkg);
