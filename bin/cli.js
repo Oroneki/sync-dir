@@ -59,9 +59,7 @@ if (cli.flags.config) {
 }
 
 if (cli.flags.watch) {
-    syncDir.watch(pkg,() => {
-        syncDir.copy(pkg);
-    });
+    syncDir.watch(pkg);
 } else {
     syncDir.copy(pkg);
 }
