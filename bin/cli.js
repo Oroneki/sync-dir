@@ -31,6 +31,7 @@ let cli = meow(`
     Options
       -w, --watch
       -c, --config
+      -s, --silent
       -v, --version version
       -h, --help help
     Examples
@@ -40,26 +41,29 @@ let cli = meow(`
       $ sync-dir --config ./sync.conf.js
 `, {
     alias: {
+        s: 'silent',
         w: 'watch',
         c: 'config',
         v: 'version',
         h: 'help'
     },
     default: {
+        silent: false,
         watch: false
     },
     boolean: [
-        'watch'
+        'watch',
+        'silent'
     ]
 });
 
 if (cli.flags.config) {
     let conf = require(path.join(process.cwd(), cli.flags.config));
-    Object.assign(pkg.sync,conf);
+    Object.assign(pkg.sync, conf);
 }
 
 if (cli.flags.watch) {
-    syncDir.watch(pkg);
+    syncDir.watch(pkg, cli.flags);
 } else {
-    syncDir.copy(pkg);
+    syncDir.copy(pkg, cli.flags);
 }
