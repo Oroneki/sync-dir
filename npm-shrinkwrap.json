@@ -1000,7 +1000,7 @@
     },
     "glob-base": {
       "version": "0.3.0",
-      "from": "glob-base@>=0.3.0 <0.4.0",
+      "from": "glob-base@latest",
       "resolved": "https://registry.npmjs.org/glob-base/-/glob-base-0.3.0.tgz"
     },
     "glob-parent": {
